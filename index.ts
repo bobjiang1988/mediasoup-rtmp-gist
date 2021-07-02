@@ -54,4 +54,10 @@ const run = async (router: Router, producer: Producer) => {
   const service = new FFMpegService({ transport, producer, consumer });
 
   service.run();
+  await Promise.resolve((resolve: () => void) => {
+    setTimeout(async () => {
+      await consumer.resume();
+      resolve();
+    }, 1000);
+  });
 };
